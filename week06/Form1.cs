@@ -17,13 +17,51 @@ namespace week06
     public partial class Form1 : Form
     {
         BindingList<RateData> Rates = new BindingList<RateData>();
+        BindingList<string> Currencies = new BindingList<string>();
         public Form1()
         {
             InitializeComponent();
-
+            GetCurrencies();
             RefreshData();
             dataGridView1.DataSource = Rates;
+            comboBox1.DataSource = Currencies;
             
+        }
+        void GetCurrencies()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
+
+            
+
+            var request2 = new GetCurrenciesRequestBody();
+            
+            
+
+            var response2 = mnbService.GetCurrencies(request2);
+
+            
+            var result = response2.GetCurrenciesResult;
+
+           
+            var xml = new XmlDocument();
+            xml.LoadXml(result);
+            richTextBox1.Text = result;
+           
+            foreach (XmlElement element in xml.DocumentElement)
+            {
+                string currency="";
+                // Valuta
+                
+                //currency = childElement.GetAttribute("Curr");
+                //currency = (element.GetAttribute("curr"));
+                for (int i = 0; i < element.ChildNodes.Count; i++)
+                {
+                    currency = (element.ChildNodes[i].InnerText);
+                    Currencies.Add(currency);
+                }
+                
+               
+            }
         }
         void KulonFuggveny()
         {
@@ -56,6 +94,8 @@ namespace week06
 
                 // Valuta
                 var childElement = (XmlElement)element.ChildNodes[0];
+                if (childElement == null)
+                    continue;
                 rate.Currency = childElement.GetAttribute("curr");
 
                 // Érték
