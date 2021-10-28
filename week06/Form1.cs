@@ -20,10 +20,10 @@ namespace week06
         public Form1()
         {
             InitializeComponent();
-            KulonFuggveny();
-            
+
+            RefreshData();
             dataGridView1.DataSource = Rates;
-            CreateChart();
+            
         }
         void KulonFuggveny()
         {
@@ -31,9 +31,9 @@ namespace week06
 
             var request = new GetExchangeRatesRequestBody()
             {
-                currencyNames = "EUR",
-                startDate = "2020-01-01",
-                endDate = "2020-06-30"
+                currencyNames = (string)comboBox1.SelectedItem,
+                startDate = dateTimePicker1.Value.ToString(),
+                endDate = dateTimePicker2.Value.ToString()
             };
 
             var response = mnbService.GetExchangeRates(request);
@@ -82,6 +82,17 @@ namespace week06
             chartArea.AxisX.MajorGrid.Enabled = false;
             chartArea.AxisY.MajorGrid.Enabled = false;
             chartArea.AxisY.IsStartedFromZero = false;
+        }
+        void RefreshData()
+        {
+            Rates.Clear();
+            KulonFuggveny();
+            CreateChart();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            RefreshData();
         }
     }
 }
