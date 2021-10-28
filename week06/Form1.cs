@@ -7,17 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using week06.Entitites;
 using week06.MnbServiceReference;
 
 namespace week06
 {
     public partial class Form1 : Form
     {
-        
+        BindingList<RateData> Rates = new BindingList<RateData>();
         public Form1()
         {
             InitializeComponent();
             KulonFuggveny();
+            dataGridView1.DataSource = Rates;
         }
         void KulonFuggveny()
         {
