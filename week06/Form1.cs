@@ -49,19 +49,29 @@ namespace week06
            
             foreach (XmlElement element in xml.DocumentElement)
             {
-                string currency="";
+               // string currency="";
                 // Valuta
                 
                 //currency = childElement.GetAttribute("Curr");
                 //currency = (element.GetAttribute("curr"));
-                for (int i = 0; i < element.ChildNodes.Count; i++)
-                {
-                    currency = (element.ChildNodes[i].InnerText);
-                    Currencies.Add(currency);
-                }
+              //  for (int i = 0; i < element.ChildNodes.Count; i++)
+              //  {
+               //     currency = (element.ChildNodes[i].InnerText);
+               //     Currencies.Add(currency);
+              //  }
+                
                 
                
             }
+            
+                
+                foreach (XmlElement asd in xml.DocumentElement.ChildNodes[0])
+                {
+                    string currency = (asd.InnerText);
+                    Currencies.Add(currency);
+                }
+                
+            
         }
         void KulonFuggveny()
         {
